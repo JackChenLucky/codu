@@ -1,0 +1,36 @@
+<div class="pageContent">
+	<form method="post" action="/role/save" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<div class="pageFormContent" layoutH="56">
+			<p>
+				<label>角色名称：</label>
+				<input type="hidden" name="id" value="${role.id!}"/>
+				<input name="rolename" class="required" type="text" size="30" value="${role.rolename!}" alt="请输入菜单名称"/>
+			</p>
+			<p style="height:50px;">
+				<label>角色描述：</label>
+				<textarea name="describle" cols="27" rows="3">${role.describle!}</textarea>
+			</p>
+			<p>
+				<label>状态：</label>
+				<select name="status" class="required combox">
+					<option value="">请选择</option>
+					<option value="0"  <%isSelected("0",role.status!);%>>启用</option>
+					<option value="1" <%isSelected("1",role.status!);%>>停用</option>
+				</select>
+			</p>
+			<p>
+				<label>排序序号：</label>
+				<input type="text" name="orderseq" class="required" size="30" value='${role.orderseq!}'  alt="请输入排序序号"/>
+			</p>
+		</div>
+		<div class="formBar">
+			<ul>
+				<!--<li><a class="buttonActive" href="javascript:;"><span>保存</span></a></li>-->
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>

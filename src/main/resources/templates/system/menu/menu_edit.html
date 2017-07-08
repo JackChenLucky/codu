@@ -1,0 +1,38 @@
+<div class="pageContent">
+	<form method="post" action="/menu/save" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<div class="pageFormContent" layoutH="56">
+			<p>
+				<label>菜单名称：</label>
+				<input type="hidden" name="id" value="${menu.id!}"/>
+				<input name="name" class="required" type="text" size="30" value="${menu.name!}" alt="请输入菜单名称"/>
+			</p>
+			<p>
+				<label>菜单Url：</label>
+				<input name="url" class="required" type="text" size="30" value="${menu.url!}" alt="请输入菜单URL"/>
+			</p>
+			<p>
+				<label>菜单参数：</label>
+				<input name="params" type="text" size="30" value="${menu.params!}"/>
+			</p>
+			<p>
+				<label>上级菜单：</label>
+				<input name="pid" lookupname="district.id" type="hidden" size="30" value="${menu.pid!}"/>
+				<input name="pmenuname" lookupname="district.menuName" class="required" type="text" size="30"  value="${pmenuname!}" />
+				<a class="btnLook" href="/menu/lookup.htm?id=${menu.id!}" lookupGroup="district"  width="212" height="420">查找菜单列表</a>
+			</p>
+			<p>
+				<label>排序序号：</label>
+				<input type="text" name="orderseq" class="required" size="30" value='${menu.orderseq!}'  alt="请输入排序序号"/>
+			</p>
+		</div>
+		<div class="formBar">
+			<ul>
+				<!--<li><a class="buttonActive" href="javascript:;"><span>保存</span></a></li>-->
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>

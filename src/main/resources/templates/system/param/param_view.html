@@ -1,0 +1,48 @@
+<!-- 系统参数维护界面 -->
+<div class="pageHeader">
+	<form id="pagerForm" onsubmit="return navTabSearch(this);" action="/param/view.htm" method="post">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					查询条件：<input type="text" name="deptname" value="${SearchCondition.deptname!}"/>
+				</td>
+				<td>
+					<div class="buttonActive"><div class="buttonContent"><button id="btnQuery" type="submit" style="width:60px;"> 检 索 </button></div></div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="/param/edit.htm" target="dialog" mask="true"><span>添加系统参数</span></a></li>
+			<li class="line">line</li>
+			<li><a id="edit" class="edit" href="/param/edit.htm?id={sid_obj}" target="dialog" mask="true"><span>编辑</span></a></li>
+			<li class="line">line</li>
+			<li><a class="delete" href="/param/delete?id={sid_obj}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+		</ul>
+	</div>
+	<table class="table" layoutH="125" rel="jbsxBox">
+		<thead>
+			<tr>
+				<th width="80">序号</th>
+				<th width="100">参数代码</th>
+				<th width="100">参数值</th>
+				<th width="120">参数说明</th>
+			</tr>
+		</thead>
+		<tbody>
+			<%for(parm in paramlist){ %>
+			<tr target="sid_obj" rel="${parm.id}" title="双击进行修改">
+				<td>${parmLP.index}</td>
+				<td>${parm.parmcde}</td>
+				<td>${parm.parmval}</td>
+				<td>${parm.note}</td>
+			</tr>
+			<%} %>
+		</tbody>
+	</table>
+</div>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jack.codu.modules.system.dao.SysUserMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="cn.jack.codu.modules.system.model.SysUser">
+		<id column="ID" property="id" />
+		<result column="SEX" property="sex" />
+		<result column="EXPIREDATE" property="expiredate" />
+		<result column="USERNAME" property="username" />
+		<result column="DEPT" property="dept" />
+		<result column="TELPHONE" property="telphone" />
+		<result column="STATUS" property="status" />
+		<result column="LOGINNAME" property="loginname" />
+		<result column="PASSWORD" property="password" />
+		<result column="OTHERNAME" property="othername" />
+		<result column="WEBCHAT" property="webchat" />
+		<result column="BIRTHDAY" property="birthday" />
+		<result column="EMAIL" property="email" />
+		<result column="QQ" property="qq" />
+	</resultMap>
+
+</mapper>

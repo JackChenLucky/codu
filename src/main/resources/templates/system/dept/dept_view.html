@@ -1,0 +1,95 @@
+<div class="pageContent">
+		<div style="width:200px;float:left;left:0px;top:0px;">
+			<%print(deptHtml);%>
+		</div>
+		<div style="margin-left: 200px;border-left:1px solid #B8D0D6;">
+		    <div class="pageHeader">
+				<form id="pagerForm" onsubmit="return navTabSearch(this);" action="/dept/view.htm" method="post">
+				<input type="hidden" name="pageNum" value=1 />
+				<input type="hidden" name="numPerPage" value=${SearchCondition.numPerPage!20} />
+				<input type="hidden" name="orderField" value="" />
+				<input type="hidden" name="orderDirection" value="" />
+				<div class="searchBar">
+					<table class="searchContent">
+						<tr>
+							<td>
+								用户姓名：<input type="text" name="deptname" value="${SearchCondition.deptname!}"/>
+							</td>
+							<td>
+							   <label>用户状态：</label>
+								<select class="combox" name="status">
+									<option value="">所有</option>
+									<option value="0"
+									  <%if(SearchCondition.status=="0"){%>
+											selected=selected
+									  <%}%>
+									>有效</option>
+									<option value="1"
+									   <%if(SearchCondition.status=="1"){%>
+											selected=selected
+									  <%}%>
+									>无效</option>
+								</select>
+							</td>
+							<td>
+								<div class="buttonActive"><div class="buttonContent"><button id="btnQuery" type="submit" style="width:60px;"> 检 索 </button></div></div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				</form>
+			</div>
+			<div class="panelBar">
+				<ul class="toolBar">
+					<li><a class="add" href="/dept/edit.htm" target="dialog" rel="adddept" mask="true" title="添加新部门"  width="412" height="320"><span>添加</span></a></li>
+					<li><a class="delete" href="/dept/delete/{sid_dept}" target="ajaxTodo" title="确定要删除吗?" callback="deleteUser"><span>删除</span></a></li>
+					<li><a class="edit" href="/dept/edit.htm?id={sid_dept}" rel="editdept" target="dialog" mask="true" title="编辑部门"  width="412" height="320"><span>修改</span></a></li>
+					<li class="line">line</li>
+					<li><a class="abandonuser" href="/user/disable/{sid_dept}" target="ajaxTodo" callback="dialogAjaxDone"  title="确定要停用当前部门吗?"><span>停用</span></a></li>
+					<li><a class="enableuser" href="/user/enable/{sid_dept}" target="ajaxTodo" callback="dialogAjaxDone"  title="确定要重新启用当前部门吗?"><span>启用</span></a></li>
+					<li class="line">line</li>
+					<li><a class="icon" href="demo/common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
+				</ul>
+			</div>
+			<table class="table" width="100%" layoutH="115">
+				<thead>
+					<tr>
+						<th width="20">序号</th>
+						<th width="80">部门编码</th>
+						<th width="120">部门名称</th>
+						<th width="80" align="center">状态</th>
+						<th width="80" align="center">排序</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%for(dept in deptList){%>
+						<tr target="sid_dept" rel="${dept.id}">
+							<td>${deptLP.index!}</td>
+							<td>${dept.deptcode!}</td>
+							<td>${dept.deptname!}</td>
+							<td>${dept.statusNm!}</td>
+							<td>${dept.orderseq!}</td>
+						</tr>
+					<%}%>
+				</tbody>
+			</table>
+			<div class="panelBar">
+				<div class="pages">
+					<span>显示</span>
+					<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+						<option value="5"  <%isSelected("5",SearchCondition.numPerPage!);%>>5</option>
+						<option value="10" <%isSelected("10",SearchCondition.numPerPage!);%>>10</option>
+						<option value="20" <%isSelected("20",SearchCondition.numPerPage!);%>>20</option>
+						<option value="50" <%isSelected("50",SearchCondition.numPerPage!);%>>50</option>
+						<option value="100" <%isSelected("100",SearchCondition.numPerPage!);%>>100</option>
+						<option value="200" <%isSelected("200",SearchCondition.numPerPage!);%>>200</option>
+					</select>
+					<span>条，共${totRow!}条</span>
+				</div>
+		
+				<div class="pagination" targetType="navTab" totalCount="${totRow!}" numPerPage="${SearchCondition.numPerPage!}" pageNumShown="${totPage!}" currentPage="${SearchCondition.pageNum!}"></div>
+		
+			</div>
+		</div>
+	</div>
+</div>

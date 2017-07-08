@@ -1,0 +1,83 @@
+<div class="pageContent">
+		<div style="width:200px;float:left;left:0px;top:0px;">
+			<%print(menuHtml);%>
+		</div>
+		<div style="margin-left: 200px;border-left:1px solid #B8D0D6;">
+			<div class="pageHeader">
+				<form id="pagerForm" onsubmit="return navTabSearch(this);" action="/menu/view.htm" method="post">
+				<input type="hidden" name="pageNum" value=1 />
+				<input type="hidden" name="numPerPage" value=${SearchCondition.numPerPage!20} />
+				<input type="hidden" name="orderField" value="" />
+				<input type="hidden" name="orderDirection" value="" />
+				<div class="searchBar">
+					<table class="searchContent">
+						<tr>
+							<td>
+								菜单名称：<input type="text" name="name" value="${SearchCondition.name!}"/>
+							</td>
+							<td>
+								<div class="buttonActive"><div class="buttonContent"><button id="btnQuery" type="submit" style="width:60px;"> 检 索 </button></div></div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				</form>
+			</div>
+			<div class="panelBar">
+				<ul class="toolBar">
+					<li><a class="add" href="/menu/edit.htm" target="dialog" rel="addmenu" mask="true" title="添加新部门"  width="412" height="320"><span>添加</span></a></li>
+					<li><a class="delete" href="/menu/delete/{sid_menu}" target="ajaxTodo" title="确定要删除吗?" callback="deleteUser"><span>删除</span></a></li>
+					<li><a class="edit" href="/menu/edit.htm?id={sid_menu}" rel="editmenu" target="dialog" mask="true" title="编辑部门"  width="412" height="320"><span>修改</span></a></li>
+					<li class="line">line</li>
+					<li><a class="abandonuser" href="/user/disable/{sid_menu}" target="ajaxTodo" callback="dialogAjaxDone"  title="确定要停用当前部门吗?"><span>停用</span></a></li>
+					<li><a class="enableuser" href="/user/enable/{sid_menu}" target="ajaxTodo" callback="dialogAjaxDone"  title="确定要重新启用当前部门吗?"><span>启用</span></a></li>
+					<li class="line">line</li>
+					<li><a class="icon" href="demo/common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
+				</ul>
+			</div>
+			<table class="table" width="100%" layoutH="115">
+				<thead>
+					<tr>
+						<th width="60">序号</th>
+						<th width="100">菜单名称</th>
+						<th width="120">菜单URL</th>
+						<th width="120">参数</th>
+						<th width="100">图标</th>
+						<th width="200">描述</th>
+						<th width="200">排序</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%for(menu in menuList){%>
+						<tr target="sid_menu" rel="${menu.id}">
+							<td>${menuLP.index!}</td>
+							<td>${menu.name!}</td>
+							<td>${menu.url!}</td>
+							<td>${menu.params!}</td>
+							<td>${menu.icon!}</td>
+							<td>${menu.describle!}</td>
+							<td>${menu.orderseq!}</td>
+						</tr>
+					<%}%>
+				</tbody>
+			</table>
+			<div class="panelBar">
+				<div class="pages">
+					<span>显示</span>
+					<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+						<option value="5"  <%isSelected("5",SearchCondition.numPerPage!);%>>5</option>
+						<option value="10" <%isSelected("10",SearchCondition.numPerPage!);%>>10</option>
+						<option value="20" <%isSelected("20",SearchCondition.numPerPage!);%>>20</option>
+						<option value="50" <%isSelected("50",SearchCondition.numPerPage!);%>>50</option>
+						<option value="100" <%isSelected("100",SearchCondition.numPerPage!);%>>100</option>
+						<option value="200" <%isSelected("200",SearchCondition.numPerPage!);%>>200</option>
+					</select>
+					<span>条，共${totRow!}条</span>
+				</div>
+		
+				<div class="pagination" targetType="navTab" totalCount="${totRow!}" numPerPage="${SearchCondition.numPerPage!}" pageNumShown="${totPage!}" currentPage="${SearchCondition.pageNum!}"></div>
+		
+			</div>
+		</div>
+	</div>
+</div>

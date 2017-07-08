@@ -1,0 +1,88 @@
+<div class="pageHeader">
+	<form id="pagerForm" onsubmit="return navTabSearch(this);" action="/item/view.htm" method="post">
+	<input type="hidden" name="pageNum" value=1 />
+	<input type="hidden" name="numPerPage" value=${SearchCondition.numPerPage!20} />
+	<input type="hidden" name="orderField" value="" />
+	<input type="hidden" name="orderDirection" value="" />
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					检索条件:
+					项目名称：<input type="text" name="itemname" value="${SearchCondition.username!}"/>
+				</td>
+				<td>
+				   <label>责任单位：</label>
+					<select class="combox" name="status">
+						<option value="">所有</option>
+					</select>
+				</td>
+				<td>
+				   <label>状<span style="padding-left:24px;"/>态：</label>
+					<select class="combox" name="status">
+						<option value="">所有</option>
+					</select>
+				</td>
+				<td>
+					<div class="buttonActive"><div class="buttonContent"><button id="btnQuery" type="submit" style="width:60px;"> 检 索 </button></div></div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="/item/edit.htm" target="navtab" mask="true" title="批示件立项申请" rel="usereadd"  width="800" height="430"><span>立项申请</span></a></li>
+			<li><a class="edit" href="/user/edit.htm?id={sid_user}" target="dialog" mask="true" rel="useredit" title="编辑用户"  width="800" height="430"><span>修改</span></a></li>
+			<li><a class="delete" href="/user/delete/{sid_user}" target="ajaxTodo" title="确定要删除吗?" callback="deleteUser"><span>删除</span></a></li>
+			<li class="line">line</li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="115">
+		<thead>
+			<tr>
+				<th width="80">序号</th>
+				<th width="80">状态</th>
+				<th width="80">项目名称</th>
+				<th width="100">上报时间</th>
+				<th width="100">进度比例</th>
+				<th width="80">牵头单位</th>
+				<th width="120">责任单位</th>
+				<th width="80">责任人</th>
+				<th width="80">难度系数</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr target="sid_user" rel="">
+				<td>1</td>
+				<td>进行中</td>
+				<td>通信设备产业园建设</td>
+				<td></td>
+				<td>0%</td>
+				<td></td>
+				<td>开发区</td>
+				<td>张苏平</td>
+				<td>0.00</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>显示</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				<option value="5"  <%isSelected("5",SearchCondition.numPerPage!);%>>5</option>
+				<option value="10" <%isSelected("10",SearchCondition.numPerPage!);%>>10</option>
+				<option value="20" <%isSelected("20",SearchCondition.numPerPage!);%>>20</option>
+				<option value="50" <%isSelected("50",SearchCondition.numPerPage!);%>>50</option>
+				<option value="100" <%isSelected("100",SearchCondition.numPerPage!);%>>100</option>
+				<option value="200" <%isSelected("200",SearchCondition.numPerPage!);%>>200</option>
+			</select>
+			<span>条，共${totRow!}条</span>
+		</div>
+
+		<div class="pagination" targetType="navTab" totalCount="${totRow!}" numPerPage="${SearchCondition.numPerPage!}" pageNumShown="${totPage!}" currentPage="${SearchCondition.pageNum!}"></div>
+
+	</div>
+</div>

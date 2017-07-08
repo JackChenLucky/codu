@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <title>临安执行督察-登录</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+
+	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+	<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
+	<link href="css/style-metro.css" rel="stylesheet" type="text/css"/>
+
+	<link href="css/style.css" rel="stylesheet" type="text/css"/>
+
+	<!-- BEGIN PAGE LEVEL STYLES -->
+
+	<link href="css/login.css" rel="stylesheet" type="text/css"/>
+
+	<!-- END PAGE LEVEL STYLES -->
+
+	<link rel="shortcut icon" href="img/favicon.ico" />
+</head>
+
+<body class="login">
+    <!-- BEGIN LOGO -->
+	<div class="logo">
+		<img src="img/logo-big.png" alt="" /> 
+	</div>
+	<!-- END LOGO -->
+
+	<!-- BEGIN LOGIN -->
+	<div class="content">
+		<!-- BEGIN LOGIN FORM -->
+		<form class="form-vertical login-form" action="index.htm" onsubmit="return false;">
+			<h3 class="form-title">欢迎登陆系统</h3>
+			<div class="alert alert-error hide">
+				<button class="close" data-dismiss="alert"></button>
+				<span>Enter any username and password.</span>
+			</div>
+			<div class="control-group">
+				<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+				<label class="control-label visible-ie8 visible-ie9">登录名</label>
+				<div class="controls">
+					<div class="input-icon left">
+						<i class="icon-user"></i>
+						<input class="m-wrap placeholder-no-fix" type="text" placeholder="登录名" name="username"/>
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label visible-ie8 visible-ie9">密码</label>
+				<div class="controls">
+					<div class="input-icon left">
+
+						<i class="icon-lock"></i>
+
+						<input class="m-wrap placeholder-no-fix" type="password" placeholder="密码" name="password"/>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="form-actions">
+
+				<label class="checkbox">
+				<input type="checkbox" name="remember" value="1"/> 记住我
+				</label>
+
+				<a id="btn-login" class="btn blue pull-right">
+				登 录 <i class="m-icon-swapright m-icon-white"></i>
+				</a>            
+
+			</div>
+
+		</form>
+
+		<!-- END LOGIN FORM -->   
+	</div>
+	<!-- END LOGIN -->
+
+	<!-- BEGIN COPYRIGHT -->
+
+	<div class="copyright">
+
+		2017 &copy; JackChen.
+
+	</div>
+
+	<!-- END COPYRIGHT -->
+</body>
+<script src="/plugins/jquery-1.10.1.min.js"></script>
+<script src="/plugins/Stretcher/jquery.backstretch.min.js"></script>
+<script>
+	$(function() {
+		$.backstretch([ "img/bg/bg11.jpg", "img/bg/2.jpg", "img/bg/4.jpg",
+				"img/bg/bg1.jpg", "img/bg/1.jpg", "img/bg/bg2.jpg",
+				"img/bg/3.jpg", "img/bg/bg3.jpg", "img/bg/bg4.jpg",
+				"img/bg/bg5.jpg", "img/bg/bg6.jpg", "img/bg/bg7.jpg",
+				"img/bg/bg8.jpg", "img/bg/bg9.jpg", "img/bg/bg10.jpg" ], {
+			fade : 1000,
+			duration : 5000
+		});
+
+		$('#btn-login').click(function() {
+			login();
+		})
+
+		$('input')
+				.keydown(
+						function() {
+							if (event.keyCode == "13") {//keyCode=13是回车键
+								if ($("input[name='username']").val().length > 0
+										&& $("input[name='password']").val().length > 0) {
+									login();
+								} else if ($(this).attr("name") == "username") {
+									$("input[name='password']").focus();
+								} else if ($(this).attr("name") == "password"
+										&& $("input[name='username']").val().length > 0) {
+									login();
+								}
+							}
+						});
+		$("input[name='username']").focus();
+	});
+	function login() {
+		$.post('/ajaxLogin', {
+			'username' : $("input[name='username']").val(),
+			'password' : $("input[name='password']").val()
+		}, function(data) {
+			if (data.success) {
+				location.href = "/index";
+			} else {
+				alert(JSON.stringify(data));
+			}
+		})
+	}
+</script>
+</html>

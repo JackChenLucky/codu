@@ -1,0 +1,100 @@
+<div class="row">
+	<div class="col-md-9 col-sm-12" style="border-right:1px solid #b8d0d6;">
+		 <div class="pageHeader">
+				<form id="pagerForm" onsubmit="return navTabSearch(this);" action="/role/view.htm" method="post">
+				<input type="hidden" name="pageNum" value=1 />
+				<input type="hidden" name="numPerPage" value=${SearchCondition.numPerPage!20} />
+				<input type="hidden" name="orderField" value="" />
+				<input type="hidden" name="orderDirection" value="" />
+				<div class="searchBar">
+					<table class="searchContent">
+						<tr>
+							<td>
+								角色名称：<input type="text" name="rolename" value="${SearchCondition.rolename!}"/>
+							</td>
+							<td>
+								<div class="buttonActive"><div class="buttonContent"><button id="btnQuery" type="submit" style="width:60px;"> 检 索 </button></div></div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				</form>
+			</div>
+			<div class="panelBar">
+				<ul class="toolBar">
+					<li><a class="add" href="/role/edit.htm" target="dialog" rel="addrole" mask="true" title="添加新角色"  width="412" height="320"><span>添加</span></a></li>
+					<li><a class="delete" href="/role/delete/{sid_role}" target="ajaxTodo" title="确定要删除吗?" callback="deleteRole"><span>删除</span></a></li>
+					<li><a class="edit" href="/role/edit.htm?id={sid_role}" rel="editdept" target="dialog" mask="true" title="编辑角色"  width="412" height="320"><span>修改</span></a></li>
+					<li><a class="enableuser" href="/role/adduser/{sid_role}" target="ajaxTodo" callback="dialogAjaxDone"  title="给指定的角色分配用户"><span>分配用户</span></a></li>
+					<li class="line">line</li>
+					<li><a class="icon" href="demo/common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
+				</ul>
+			</div>
+			<table id="roleList" class="table" width="100%" layoutH="115">
+				<thead>
+					<tr>
+						<th width="40">序号</th>
+						<th width="120">角色名称</th>
+						<th width="260">角色描述</th>
+						<th width="80" align="center">状态</th>
+						<th width="80" align="center">排序</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%for(role in roleList){%>
+					<tr target="sid_role" rel="${role.id}">
+						<td>${roleLP.index!}</td>
+						<td>${role.rolename}</td>
+						<td>${role.describle}</td>
+						<td>${role.statusNm}</td>
+						<td>${role.orderseq}</td>
+					</tr>
+				<%}%>
+				</tbody>
+			</table>
+			<div class="panelBar">
+				<div class="pages">
+					<span>显示</span>
+					<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+						<option value="5"  <%isSelected("5",SearchCondition.numPerPage!);%>>5</option>
+						<option value="10" <%isSelected("10",SearchCondition.numPerPage!);%>>10</option>
+						<option value="20" <%isSelected("20",SearchCondition.numPerPage!);%>>20</option>
+						<option value="50" <%isSelected("50",SearchCondition.numPerPage!);%>>50</option>
+						<option value="100" <%isSelected("100",SearchCondition.numPerPage!);%>>100</option>
+						<option value="200" <%isSelected("200",SearchCondition.numPerPage!);%>>200</option>
+					</select>
+					<span>条，共${totRow!}条</span>
+				</div>
+		
+				<div class="pagination" targetType="navTab" totalCount="${totRow!}" numPerPage="${SearchCondition.numPerPage!}" pageNumShown="${totPage!}" currentPage="${SearchCondition.pageNum!}"></div>
+		
+			</div>
+	</div>
+	<div class="col-md-3 col-sm-12" style="padding-left:10px;">
+		<div class="panel" defH="518">
+				<div id="roleuserlist"></div>
+		</div>
+	</div>
+</div>
+<script>
+	function sid_role_Clik(sTarget,sid){
+		showUser(sid);
+	}
+	
+	function showUser(sid){
+		var $rel = $("#roleuserlist");
+		var url = unescape("/role/userlist.htm?id="+sid).replaceTmById($(event.target).parents(".unitBox:first"));
+		DWZ.debug(url);
+		if (!url.isFinishedTm()) {
+			return false;
+		}
+
+		$rel.loadUrl(url, {}, function(){
+			$rel.find("[layoutH]").layoutH();
+		});
+	}
+	var deftr = $('#roleuserlist').find('tbody').find('tr:first');
+	if(deftr){
+		showUser(deftr.attr("rel"));
+	}
+</script>

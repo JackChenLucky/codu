@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jack.codu.modules.system.dao.InstructionsMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="cn.jack.codu.modules.system.model.Instructions">
+		<id column="id" property="id" />
+		<result column="itemname" property="itemname" />
+		<result column="requestdt" property="requestdt" />
+		<result column="requestuser" property="requestuser" />
+		<result column="leaddept" property="leaddept" />
+		<result column="dutydept" property="dutydept" />
+		<result column="dutyuser" property="dutyuser" />
+		<result column="complexity" property="complexity" />
+		<result column="progress" property="progress" />
+	</resultMap>
+
+</mapper>
