@@ -3,7 +3,10 @@ package cn.jack.codu.modules.system.service.impl;
 import cn.jack.codu.modules.system.model.SysUser;
 import cn.jack.codu.modules.system.model.vo.SysUserVo;
 import cn.jack.codu.modules.system.model.vo.UserSearchVo;
+import cn.jack.codu.common.constants.PublicConstants;
+import cn.jack.codu.common.constants.SequenceConstants;
 import cn.jack.codu.core.shiro.ShiroKit;
+import cn.jack.codu.modules.system.dao.CommonMapper;
 import cn.jack.codu.modules.system.dao.SysUserMapper;
 import cn.jack.codu.modules.system.service.ISysUserService;
 
@@ -28,6 +31,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	@Autowired
 	private SysUserMapper sysUserMapper;
 	
+	@Autowired
+	private CommonMapper commonMapper;
+	
 	@Override
 	public SysUser findUserByLoginName(String account) {
 		SysUser user = new SysUser();
@@ -42,7 +48,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
 	@Override
 	public void saveUser(SysUser sysuser) {
-		sysUserMapper.updateById(sysuser);
+		if(sysuser.getId()==null){	
+			sysuser.setId(commonMapper.getSeq(SequenceConstants.SEQ_SYSUSER));
+			sysUserMapper.insert(sysuser);
+		}else{			
+			sysUserMapper.updateById(sysuser);
+		}
 	}
 
 	@Override
@@ -52,9 +63,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	}
 
 	@Override
-	public void deleteByKey(String uid) {
-		// TODO Auto-generated method stub
-		
+	public void deleteByKey(Long id) {
+		sysUserMapper.deleteById(id);
 	}
 	
 	/**
@@ -64,7 +74,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	public boolean resetPassword(Long uid) {
 		SysUser user = new SysUser();
 		user.setId(uid);
-		user.setPassword(ShiroKit.md5("1", "jackchen"));
+		user.setPassword(ShiroKit.md5("1", PublicConstants.MD5SALT));
 		return sysUserMapper.updateById(user)>0;
 	}
 	

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jack.codu.modules.druguse.dao.KzDrugSetMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="cn.jack.codu.modules.druguse.model.KzDrugSet">
+		<id column="SEQ" property="seq" />
+		<result column="DC_FLAG" property="dcFlag" />
+		<result column="USE_TYPE" property="useType" />
+		<result column="SOURCE" property="source" />
+		<result column="USE_QUANTITY" property="useQuantity" />
+		<result column="USE_FLAG" property="useFlag" />
+		<result column="USE_UNIT" property="useUnit" />
+		<result column="YPXH" property="ypxh" />
+		<result column="KZ_LEVEL" property="kzLevel" />
+	</resultMap>
+	
+
+	<select id="findDrugsetByPage" parameterType="cn.jack.codu.modules.druguse.model.vo.DrugsetSearchVo" resultType="cn.jack.codu.modules.druguse.model.vo.DrugsetVo" >
+		SELECT SEQ,DC_FLAG dcFlag,USE_TYPE useType,decode(USE_TYPE,'1','全院控制','2','科室控制','3','个人控制') usetypename,SOURCE,decode(SOURCE,'1','门急诊',2,'住院') SOURCENAME,
+		USE_QUANTITY useQuantity,USE_FLAG useFlag,USE_UNIT useUnit,YPXH,KZ_LEVEL kzlevel,decode(KZ_LEVEL,'1','提示','2','警告','3','控制') kzlevelname,
+		(SELECT YPMC||'/'||GG||'/'||YPCD FROM V_DRUG_DICT WHERE YPXH=KZ_DRUG_SET.YPXH) drugname
+		  FROM KZ_DRUG_SET where 1=1 
+		<if test="drugcode != null and drugcode != ''">
+             and ypxh=#{drugcode}
+        </if>
+	</select>
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jack.codu.modules.druguse.dao.VDrugDictMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="cn.jack.codu.modules.druguse.model.VDrugDict">
+		<result column="BZDW" property="bzdw" />
+		<result column="GG" property="gg" />
+		<result column="PYM" property="pym" />
+		<result column="ZXBZSL" property="zxbzsl" />
+		<result column="DJ" property="dj" />
+		<result column="ZXBZDW" property="zxbzdw" />
+		<result column="YPCD" property="ypcd" />
+		<result column="YPMC" property="ypmc" />
+		<result column="YPCJ" property="ypcj" />
+		<result column="JM" property="jm" />
+		<result column="YPXH" property="ypxh" />
+		<result column="WBM" property="wbm" />
+	</resultMap>
+	<select id="findDrugByPage" parameterType="cn.jack.codu.modules.druguse.model.vo.DrugInfoSearch" 
+			resultType="cn.jack.codu.modules.druguse.model.VDrugDict">
+		SELECT * FROM V_DRUG_DICT WHERE 1=1
+		<if test="drugname != null and drugname != ''">
+			 and (YPMC like '%'||#{drugname}||'%' or YPCD like '%'||#{drugname}||'%' OR PYM LIKE '%'||#{drugname}||'%' OR WBM LIKE '%'||#{drugname}||'%')
+		</if>
+		ORDER BY YPXH
+	</select>
+</mapper>

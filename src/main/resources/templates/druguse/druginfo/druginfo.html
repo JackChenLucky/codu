@@ -1,0 +1,63 @@
+<div class="pageHeader">
+	<form method="post" action="/drug/list" onsubmit="return dwzSearch(this, 'dialog');">
+	<input type="hidden" name="pageNum" value=1 />
+	<input type="hidden" name="numPerPage" value=${SearchCondition.numPerPage!20} />
+	<input type="hidden" name="orderField" value="" />
+	<input type="hidden" name="orderDirection" value="" />
+	<div class="searchBar">
+		<ul class="searchContent">
+			<li>
+				<label>查询条件:</label>
+				<input class="textInput" name="drugname" value="${SearchCondition.drugname!}" type="text"/>
+			</li>
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit" style="width:60px;">查询</button></div></div></li>
+		</ul>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+
+<table class="table" layoutH="118" targetType="dialog" width="100%">
+		<thead>
+			<tr>
+				<th orderfield="">序号</th>
+				<th orderfield="orgNum">药品名称</th>
+				<th orderfield="creator">最小包装</th>
+				<th orderfield="creator">包装单位</th>
+				<th>拼音码</th>
+				<th>五笔码</th>
+				<th width="80">查找带回</th>
+			</tr>
+		</thead>
+		<tbody>
+			<%for(drug in userList){%>
+			<tr target="sid_drug" rel="${drug.ypxh}">
+				<td>${drugLP.index!}</td>
+				<td>${drug.ypmc}/${drug.gg}/${drug.ypcd}</td>
+				<td>${drug.zxbzsl}${drug.zxbzdw}</td>
+				<td>${drug.bzdw}</td>
+				<td>${drug.pym}</td>
+				<td>${drug.wbm}</td>
+				<td>
+					<a class="btnSelect" href="javascript:$.bringBack({'drugCode':'${drug.ypxh}', 'drugName':'${drug.ypmc}/${drug.gg}/${drug.ypcd}','drugZxbzsl':'${drug.zxbzsl}','drugZxbzdw':'${drug.zxbzdw}'})" title="查找带回">选择</a>
+				</td>
+			</tr>
+		<%}%>
+		</tbody>
+	</table>
+
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页</span>
+
+			<select name="numPerPage" onchange="dwzPageBreak({targetType:'dialog', numPerPage:'10'})">
+				<option value="10" selected="selected">10</option>
+				<option value="20">20</option>
+				<option value="50">50</option>
+				<option value="100">100</option>
+			</select>
+			<span>条，共2条</span>
+		</div>
+		<div class="pagination" targetType="dialog" totalCount="2" numPerPage="10" pageNumShown="1" currentPage="1"></div>
+	</div>
+</div>

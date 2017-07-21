@@ -1,0 +1,103 @@
+<div class="pageHeader">
+	<form id="pagerForm" onsubmit="return navTabSearch(this);" action="/drugset/view" method="post">
+	<input type="hidden" name="pageNum" value=1 />
+	<input type="hidden" name="numPerPage" value=${SearchCondition.numPerPage!20} />
+	<input type="hidden" name="orderField" value="" />
+	<input type="hidden" name="orderDirection" value="" />
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					<label>药品名称：</label>
+					<input name="drugCode" lookupname="district.drugCode" type="hidden" value="${drugset.ypxh!}"/>
+					<input name="drugName" lookupname="district.drugName" class="required" 
+					 onkeydown="if(event.keyCode==13){$('.btnLook').trigger('click');event.preventDefault();}" type="text" size="20"  value="${drugset.drugName!}""/>
+					<a class="btnLook" href="/drug/list" lookupGroup="district" style="display: none;">查找带回</a>	
+				</td>
+				<td>
+				   <label>控制类型：</label>
+					<select class="combox" name="usetype">
+						<option value="">所有</option>
+						<option value="1"
+						  <%if(SearchCondition.usetype=="1"){%>
+								selected=selected
+						  <%}%>
+						>全院控制</option>
+						<option value="2"
+						   <%if(SearchCondition.usetype=="2"){%>
+								selected=selected
+						  <%}%>
+						>科室控制</option>
+						<option value="3"
+						   <%if(SearchCondition.usetype=="3"){%>
+								selected=selected
+						  <%}%>
+						>个人控制</option>
+					</select>
+				</td>
+				<td>
+					<div class="buttonActive"><div class="buttonContent"><button id="btnQuery" type="submit" style="width:60px;"> 检 索 </button></div></div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="/drugset/edit" target="dialog" mask="true" title="添加新药品控制" rel="usereadd"  width="500" height="330"><span>添加</span></a></li>
+			<li><a class="delete" href="/drugset/delete/{sid_drug}" target="ajaxTodo" title="确定要删除吗?" callback="deleteUser"><span>删除</span></a></li>
+			<li><a class="edit" href="/drugset/edit?id={sid_drug}" target="dialog" mask="true" rel="useredit" title="编辑用户"  width="800" height="430"><span>修改</span></a></li>
+			<li class="line">line</li>
+			<li><a class="icon" href="demo/common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="115">
+		<thead>
+			<tr>
+				<th width="40">序号</th>
+				<th width="120">药品名称</th>
+				<th width="100">限制类别</th>
+				<th width="60">限制用量</th>
+				<th width="60">用量单位</th>
+				<th width="40">限制标志</th>
+				<th width="60">状态</th>
+				<th width="60">诊别</th>
+				<th width="60" align="center">控制级别</th>
+			</tr>
+		</thead>
+		<tbody>
+			<%for(drug in drugList){%>
+			<tr target="sid_drug" rel="${drug.seq!}">
+				<td>${drugLP.index!}</td>
+				<td>${drug.drugname}</td>
+				<td>${drug.usetypename}</td>
+				<td>${drug.useQuantity}</td>
+				<td>${drug.useUnit}</td>
+				<td>${drug.useFlag}</td>
+				<td>${drug.dcFlag}</td>
+				<td>${drug.sourcename}</td>
+				<td>${drug.kzlevelname}</td>
+			<%}%>
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>显示</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				<option value="5"  <%isSelected("5",SearchCondition.numPerPage!);%>>5</option>
+				<option value="10" <%isSelected("10",SearchCondition.numPerPage!);%>>10</option>
+				<option value="20" <%isSelected("20",SearchCondition.numPerPage!);%>>20</option>
+				<option value="50" <%isSelected("50",SearchCondition.numPerPage!);%>>50</option>
+				<option value="100" <%isSelected("100",SearchCondition.numPerPage!);%>>100</option>
+				<option value="200" <%isSelected("200",SearchCondition.numPerPage!);%>>200</option>
+			</select>
+			<span>条，共${totRow!}条</span>
+		</div>
+
+		<div class="pagination" targetType="navTab" totalCount="${totRow!}" numPerPage="${SearchCondition.numPerPage!}" pageNumShown="${totPage!}" currentPage="${SearchCondition.pageNum!}"></div>
+
+	</div>
+</div>
+<script type="text/javascript" src="js/drugset_view.js" ></script>

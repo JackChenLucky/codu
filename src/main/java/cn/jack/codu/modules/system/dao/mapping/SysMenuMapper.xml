@@ -14,4 +14,21 @@
 		<result column="URL" property="url" />
 	</resultMap>
 
+ 	<select id="findMenuByPid" parameterType="java.lang.Long" resultType="cn.jack.codu.modules.system.model.MenuTree"> 
+		SELECT * FROM SYS_MENU WHERE PID=#{pid} Order by orderseq
+	</select>
+	
+	<select id="findMenuByPage" parameterType="cn.jack.codu.modules.system.model.vo.MenuSearchVo" resultType="cn.jack.codu.modules.system.model.SysMenu">
+		SELECT * FROM SYS_MENU where 1=1 
+        <if test="name != null and name != ''">
+             and (NAME like '%'||#{name}||'%' or URL like '%'||#{name}||'%')
+        </if>
+	</select>
+	
+	<select id="findMenuBy" parameterType="cn.jack.codu.modules.system.model.vo.MenuSearchVo" resultType="cn.jack.codu.modules.system.model.SysMenu">
+		SELECT * FROM SYS_MENU where 1=1 
+        <if test="name != null and name != ''">
+             and (NAME like '%'||#{name}||'%' or URL like '%'||#{name}||'%')
+        </if>
+	</select>
 </mapper>

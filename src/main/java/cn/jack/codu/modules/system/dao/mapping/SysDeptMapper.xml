@@ -12,4 +12,22 @@
 		<result column="STATUS" property="status" />
 	</resultMap>
 
+	<select id="findDeptByPage" parameterType="cn.jack.codu.modules.system.model.vo.DeptSearchVo" resultMap="BaseResultMap">
+		SELECT * FROM SYS_DEPT 
+		<if test="status != null and status != ''">
+             and status=#{status}
+        </if>
+        <if test="deptname != null and deptname != ''">
+             and (id like '%'||#{deptname}||'%' or deptname like '%'||#{deptname}||'%')
+        </if>
+        ORDER BY PID,ORDERSEQ
+	</select>
+	
+	<select id="findDeptByPid" parameterType="java.lang.Long" resultType="cn.jack.codu.modules.system.model.DeptTree">
+		SELECT * FROM SYS_DEPT WHERE PID=#{pid}
+	</select>
+	
+	<select id="selectByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+		SELECT * FROM SYS_DEPT WHERE DEPTCODE=#{deptCode}
+	</select>
 </mapper>

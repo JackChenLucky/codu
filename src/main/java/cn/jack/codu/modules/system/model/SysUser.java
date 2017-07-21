@@ -2,9 +2,12 @@ package cn.jack.codu.modules.system.model;
 
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.KeySequence;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+
 import java.io.Serializable;
 
 /**
@@ -29,7 +32,7 @@ public class SysUser extends Model<SysUser> {
 	@TableField("USERNAME")
 	private String username;
 	@TableField("DEPT")
-	private Long dept;
+	private String dept;
 	@TableField("TELPHONE")
 	private String telphone;
 	@TableField("STATUS")
@@ -82,11 +85,11 @@ public class SysUser extends Model<SysUser> {
 		this.username = username;
 	}
 
-	public Long getDept() {
+	public String getDept() {
 		return dept;
 	}
 
-	public void setDept(Long dept) {
+	public void setDept(String dept) {
 		this.dept = dept;
 	}
 

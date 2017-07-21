@@ -22,7 +22,7 @@ import java.util.Map;
  * @author stylefeng
  * @Date 2017/5/21 12:38
  */
-public class MyBatisPlusGenerator {
+public class MyBatisPlusDruguseGenerator {
 
     public static void main(String[] args) {
         AutoGenerator mpg = new AutoGenerator();
@@ -63,12 +63,12 @@ public class MyBatisPlusGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setParent(null);
-        pc.setEntity("cn.jack.codu.modules.system.model");
-        pc.setMapper("cn.jack.codu.modules.system.dao");
-        pc.setXml("cn.jack.codu.modules.system.dao.mapping");
-        pc.setService("cn.jack.codu.modules.system.service");       
-        pc.setServiceImpl("cn.jack.codu.modules.system.service.impl"); 
-        pc.setController("cn.jack.codu.modules.system.controller");
+        pc.setEntity("cn.jack.codu.modules.druguse.model");
+        pc.setMapper("cn.jack.codu.modules.druguse.dao");
+        pc.setXml("cn.jack.codu.modules.druguse.dao.mapping");
+        pc.setService("cn.jack.codu.modules.druguse.service");       
+        pc.setServiceImpl("cn.jack.codu.modules.druguse.service.impl"); 
+        pc.setController("cn.jack.codu.modules.druguse.controller");
         mpg.setPackageInfo(pc);
 
         // 注入自定义配置，可以在 VM 中使用 cfg.abc 设置的值

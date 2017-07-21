@@ -53,7 +53,6 @@ public class SysUserController extends BaseController{
 		view.addObject("pageNumber",query.getSize());
 		view.addObject("userList", query.getRecords());
 		view.addObject("SearchCondition",userSearchVo);
-		SysUserVo user = query.getRecords().get(0);
 		return view;
 	}
 	
@@ -94,7 +93,7 @@ public class SysUserController extends BaseController{
 	@RequestMapping("/delete/{uid}")
 	public @ResponseBody AjaxResult delete(@PathVariable String uid){
 		AjaxResult result = new AjaxResult();
-		sysUserService.deleteByKey(uid);
+		sysUserService.deleteByKey(Long.parseLong(uid));
 		return result;
 	}
 	

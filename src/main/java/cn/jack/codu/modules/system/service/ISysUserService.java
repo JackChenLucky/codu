@@ -21,7 +21,7 @@ public interface ISysUserService extends IService<SysUser> {
 
 	void saveUser(SysUser sysuser);
 
-	void deleteByKey(String uid);
+	void deleteByKey(Long id);
 
 	SysUser findUserByLoginName(String account);
 

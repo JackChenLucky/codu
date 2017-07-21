@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jack.codu.modules.druguse.dao.KzDrugUseMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="cn.jack.codu.modules.druguse.model.KzDrugUse">
+		<id column="SEQ" property="seq" />
+		<result column="USE_MOTH" property="useMoth" />
+		<result column="USE_FLAG" property="useFlag" />
+		<result column="SOURCE" property="source" />
+		<result column="USE_UNIT" property="useUnit" />
+		<result column="USE_TYPE" property="useType" />
+		<result column="YPID" property="ypid" />
+		<result column="USE_QUANTITY" property="useQuantity" />
+	</resultMap>
+</mapper>

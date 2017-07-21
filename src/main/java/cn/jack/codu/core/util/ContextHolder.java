@@ -22,9 +22,9 @@ public class ContextHolder {
 	/**
      * 获取部门名称
      */
-    @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.DEPT_NAME + "'+#deptId")
-    public String getDeptName(Long deptId) {
-        SysDept dept = deptMapper.selectById(deptId);
+    @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.DEPT_NAME + "'+#deptCode")
+    public String getDeptName(String deptCode) {
+        SysDept dept = deptMapper.selectByCode(deptCode);
         if (ToolUtil.isNotEmpty(dept) && ToolUtil.isNotEmpty(dept.getDeptname())) {
             return dept.getDeptname();
         }

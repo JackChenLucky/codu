@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jack.codu.modules.system.dao.CommonMapper">
+	<!-- 获取序列号 -->
+  <select id="getSeq" parameterType="java.lang.String" resultType="java.lang.Long">
+  	SELECT ${seqname}.NEXTVAL FROM DUAL
+  </select>
+  
+  <select id="getCurrentDate" resultType="java.util.Date" >
+		  SELECT SYSDATE  FROM DUAL
+  </select>
+</mapper>

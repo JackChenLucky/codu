@@ -1,0 +1,81 @@
+<div class="pageContent">
+	<form method="post" action="/drugset/save" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<div class="pageFormContent" layoutH="56">
+			<p>
+				<label>控制药品：</label>
+				<input name="seq" type="hidden" value="${drugset.seq!}"/>
+				<input name="ypxh" lookupname="district.drugCode" type="hidden" size="30" value="${drugset.ypxh!}"/>
+				<input name="drugName" lookupname="district.drugName" class="required" 
+				 onkeydown="if(event.keyCode==13){$('.btnLook').trigger('click');event.preventDefault();}"  placeholder="请输入需要控制的药品" type="text" size="30"  value="${drugset.drugName!}""/>
+				<a class="btnLook" href="/drug/list" lookupGroup="district">查找带回</a>	
+			</p>
+			<p>
+				<label>控制类型：</label>
+				<select id="useType" name="useType" class="required combox" onchange="changeUseType()">
+					<option value="">请选择</option>
+					<option value="1"  <%isSelected("1",drugset.useType!);%>>全院控制</option>
+					<option value="2" <%isSelected("2",drugset.useType!);%>>科室控制</option>
+					<option value="3" <%isSelected("3",drugset.useType!);%>>个人控制</option>
+				</select>
+			</p>
+			<p>
+				<label>控制标志：</label>
+				<input name="useFlag" lookupname="district.deptCode" type="hidden" size="30" value="${drugset.useFlag!}"/>
+				<input lookupname="district.deptName" class="required" type="text" size="30"  value="${drugset.useflagname!}"/>
+				<a class="btnLook" href="/dept/lookup.htm?id=${dept.id!}" lookupGroup="district"  mask="true"  width="212" height="420">查找部门列表</a>
+			</p>
+			<p>
+				<label>限制数量：</label>
+				<input name="useQuantity" lookupname="district.drugZxbzsl" class="required" type="text" style="width:165px;" value="${drugset.useQuantity!}"  placeholder="请输入限制数量"/>
+				<input name="useUnit" lookupname="district.drugZxbzdw" type="text" size="2"/>
+			</p>
+			<p>
+				<label>控制级别：</label>
+				<select name="kzLevel" class="required combox">
+					<option value="">请选择</option>
+					<option value="1"  <%isSelected("1",drugset.kzLevel!);%>>控制</option>
+					<option value="2" <%isSelected("2",drugset.kzLevel!);%>>警告</option>
+					<option value="3" <%isSelected("3",drugset.kzLevel!);%>>提示</option>
+				</select>
+			</p>
+			<p>
+				<label>门诊住院来源：</label>
+				<select name="source" class="required combox">
+					<option value="">请选择</option>
+					<option value="1"  <%isSelected("1",drugset.source!);%>>门急诊</option>
+					<option value="2" <%isSelected("2",drugset.source!);%>>住院</option>
+				</select>
+			</p>
+			<p>
+				<label>停用标记：</label>
+				<select name="dcFlag" class="required combox">
+					<option value="">请选择</option>
+					<option value="N"  <%isSelected("N",drugset.dcFlag!);%>>启用</option>
+					<option value="Y" <%isSelected("Y",drugset.dcFlag!);%>>停用</option>
+				</select>
+			</p>
+		</div>
+		<div class="formBar">
+			<ul>
+				<!--<li><a class="buttonActive" href="javascript:;"><span>保存</span></a></li>-->
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+function changeUseType(){
+	var selecVal = $('#useType').children('option:selected').val();
+	if(selecVal=="1"){
+		$("input[name='useFlag']").attr('disabled','disabled').removeClass("required").attr("placeholder","无需填写");
+	}else if(selecVal=="2"){
+		$("input[name='useFlag']").removeAttr("disabled").addClass("required").attr("placeholder","请选择控制科室");
+	}else if(selecVal=="3"){
+		$("input[name='useFlag']").removeAttr("disabled").addClass("required").attr("placeholder","请选择控制医生");
+	}
+}
+</script>
+
